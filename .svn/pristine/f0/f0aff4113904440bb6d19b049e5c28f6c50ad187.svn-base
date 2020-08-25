@@ -1,0 +1,55 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package sistemarlf.modelo.oad.cliente;
+
+import java.util.List;
+import javax.persistence.Query;
+import sistemarlf.modelo.entidades.cliente.Cliente;
+import sistemarlf.modelo.oad.ImplIOAD;
+
+/**
+ *
+ * @author Jhonnatan
+ */
+public class OADCliente extends ImplIOAD<Cliente>{
+
+    public OADCliente() {
+        super(Cliente.class);
+    }
+    
+    public List<Cliente> ListaPeloNome(String parmNome){
+        List<Cliente> objetos = null;
+        try{
+            Query query = entityManager.createQuery(
+                    "select c from Cliente c WHERE nomeRazaoSocial like :pnome");
+            query.setParameter("pnome", "%"+parmNome+"%");
+            objetos = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }        
+
+        return objetos;
+    } 
+    @Override
+    public boolean validaExclusaoLogica(Cliente objeto) {
+        boolean ret;
+        try{
+            Query query = entityManager.createQuery(
+                    "select p from Pedido p WHERE (p.sitRegistro is NULL OR p.sitRegistro <> 'I')  AND p.cliente.codigo = :pcodclie");
+            query.setParameter("pcodclie", objeto.getCodigo());
+            ret = query.getResultList().isEmpty();
+        } catch (Exception e) {
+            e.printStackTrace();
+            ret = false;
+//        } finally {
+//            entityManager.close();
+        }         
+        return ret;
+    }
+
+    
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/visualizacao/cliente/FormCadCliente.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/visualizacao/pedido/FormCadPedido.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/oad/item/OADItem.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/oad/IOAD.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/visualizacao/SistemaRLF.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/visualizacao/ordemprod/FormConsultaOrdemProd.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/oad/produto/OADProduto.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/uteis/grid/tablemodel/MyTableModel.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/uteis/JNumberFormatField.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/visualizacao/produto/FormConsultaProduto.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/visualizacao/cliente/FormConsultaCliente.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/entidades/Registro.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/fabrica/FabricaEM.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/uteis/NumberFieldVerifier.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/uteis/Formato.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/visualizacao/ordemprod/FormGeraOrdemProducao.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/oad/ImplIOAD.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/Principal.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/entidades/pedido/Pedido.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/visualizacao/produto/FormCadProduto.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/entidades/ordem/OrdemProducao.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/oad/pedido/OADPedido.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/oad/cliente/OADCliente.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/oad/ordem/OADOrdemProducao.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/visualizacao/pedido/FormConsultaPedido.java</file>
+            <file>file:/C:/Users/Rosaine%20Semler/Documents/NetBeansProjects/SistemaRLF/SistemaRLF/src/sistemarlf/modelo/oad/caracteristica/OADCaracteristica.java</file>
+        </group>
+    </open-files>
+</project-private>

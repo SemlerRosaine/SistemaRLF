@@ -1,0 +1,42 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package sistemarlf.modelo.entidades;
+
+import java.io.Serializable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
+/**
+ *
+ * @author Jhonnatan
+ */
+@MappedSuperclass
+public abstract class Registro implements Serializable {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer codigo;
+    private Character sitRegistro;
+
+    public Character getSitRegistro() {
+        return sitRegistro;
+    }
+
+    public void setSitRegistro(Character sitRegistro) {
+        this.sitRegistro = sitRegistro;
+    }
+    
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+    
+   
+}

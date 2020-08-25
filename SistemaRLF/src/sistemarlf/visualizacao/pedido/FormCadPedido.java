@@ -1,0 +1,837 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package sistemarlf.visualizacao.pedido;
+
+import componente.text.RequiredComboBox;
+import componente.text.formated.TxtCPFCNPJDinamico;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import sistemarlf.Principal;
+import sistemarlf.modelo.entidades.caracteristica.Caracteristica;
+import sistemarlf.modelo.entidades.cliente.Cliente;
+import sistemarlf.modelo.entidades.item.Item;
+import sistemarlf.modelo.entidades.pedido.Pedido;
+import sistemarlf.modelo.entidades.produto.Produto;
+import sistemarlf.modelo.oad.cliente.OADCliente;
+import sistemarlf.modelo.oad.item.OADItem;
+import sistemarlf.modelo.oad.pedido.OADPedido;
+import sistemarlf.visualizacao.cliente.FormConsultaCliente;
+import sistemarlf.visualizacao.produto.FormConsultaProduto;
+import uteis.NumberFieldVerifier;
+
+/**
+ *
+ * @author Rosaine e Jhonnatan
+ */
+public class FormCadPedido extends javax.swing.JPanel {
+
+    JInternalFrame telaCarregada;
+    Object telaChamadora;
+    DefaultTableModel tmItensPedido;
+    Cliente clienteSelecionado;
+    Pedido pedido;
+    Produto produtoSelecionado;
+    Caracteristica tamanhoSelecionado;
+    Caracteristica corSelecionada;
+    Item itemSelecionado;
+    List<Item> itensDoPedido = new ArrayList<Item>();
+    ;
+    DefaultComboBoxModel lmTamSelecProdt = new DefaultComboBoxModel();
+    DefaultComboBoxModel lmCoresSelecProdt = new DefaultComboBoxModel();
+    List<Caracteristica> listTamSelec = new ArrayList<Caracteristica>();
+    List<Caracteristica> listCorSelec = new ArrayList<Caracteristica>();
+    NumberFieldVerifier verificador = new NumberFieldVerifier(true);
+    private Boolean closeOnSave = false;
+    /**
+     * Creates new form ProtCadastraCliente
+     */
+    public FormCadPedido(JInternalFrame jfChamador, Pedido pedido) {
+        telaCarregada = jfChamador;
+        initComponents();
+        clienteSelecionado = new Cliente();
+        produtoSelecionado = new Produto();
+        tamanhoSelecionado = new Caracteristica();
+        corSelecionada = new Caracteristica();
+        this.pedido = pedido;
+
+    }
+
+    public FormCadPedido(JInternalFrame jfCarregado, Object jfChamador, Pedido ped) {
+        InicializaCarregamento(jfCarregado, jfChamador, ped);
+    }
+
+    public FormCadPedido(JInternalFrame jfCarregado, Object jfChamador, Pedido ped, boolean SomenteLeitura) {
+        InicializaCarregamento(jfCarregado, jfChamador, ped);
+        if (SomenteLeitura) {
+            btnExcluirProdPedido.setEnabled(false);
+            btnIncluirProdPedido.setEnabled(false);
+            btnLimpaCliente.setEnabled(false);
+            btnLimpaProduto.setEnabled(false);
+            btnNovaCorProdPedido.setEnabled(false);
+            btnNovoTamProdPedido.setEnabled(false);
+            btnPesqCliente.setEnabled(false);
+            btnPesqProd.setEnabled(false);
+            btnSalvar.setEnabled(false);
+            cmbCorProdPedido.setEnabled(false);
+            cmbTamProdPedido.setEnabled(false);
+            txtCodProdPedido.setEnabled(false);
+            txtDescProdPedido.setEnabled(false);
+            txtQtdeProdPedido.setEnabled(false);
+            txtVlrProdPedido.setEnabled(false);
+
+        }
+        
+
+    }
+    
+    public FormCadPedido(JInternalFrame jfCarregada, Object jfChamadora, Pedido c, Boolean closeOnSave) {
+        this(jfCarregada, jfChamadora, c);
+        this.closeOnSave = closeOnSave;
+    }
+
+    private void InicializaCarregamento(JInternalFrame jfCarregado, Object jfChamador, Pedido ped) {
+        telaCarregada = jfCarregado;
+        telaChamadora = jfChamador;
+        initComponents();
+        if (ped == null) {
+            clienteSelecionado = new Cliente();
+            produtoSelecionado = new Produto();
+            tamanhoSelecionado = new Caracteristica();
+            corSelecionada = new Caracteristica();
+            txtNomeClientePedido.requestFocus();
+        } else {
+            pedido = ped;
+            txtCodPedido.setText(ped.getCodigo().toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+            txtDataInclPedido.setText(sdf.format(ped.getDataInclusao()));
+            this.setClienteSelecionado(ped.getCliente());
+            itensDoPedido = new OADPedido().getItensPedido(ped);
+            txtVlrTotalPedido.setText(ped.getValorTotalPedidoFormatado());
+
+            for (int i = 0; i < itensDoPedido.size(); i++) {
+                tmItensPedido.addRow(itensDoPedido.get(i).getLinha());
+            }
+            txtCodProdPedido.requestFocus();
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel3 = new javax.swing.JLabel();
+        txtCodPedido = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtDataInclPedido = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        txtCodProdPedido = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtDescProdPedido = new javax.swing.JTextField();
+        btnPesqProd = new javax.swing.JButton();
+        cmbTamProdPedido = new RequiredComboBox(true);
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        cmbCorProdPedido = new RequiredComboBox(true);
+        btnNovoTamProdPedido = new javax.swing.JButton();
+        btnNovaCorProdPedido = new javax.swing.JButton();
+        btnExcluirProdPedido = new javax.swing.JButton();
+        btnIncluirProdPedido = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        gridItensPedido = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
+        txtVlrTotalPedido = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        btnLimpaProduto = new javax.swing.JButton();
+        txtQtdeProdPedido = new componente.text.RequiredTextField();
+        txtVlrProdPedido = new componente.text.RequiredTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtNomeClientePedido = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        btnPesqCliente = new javax.swing.JButton();
+        btnLimpaCliente = new javax.swing.JButton();
+        txtCpfCnpjClientePedido = new TxtCPFCNPJDinamico(false);
+        btnFechar = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JSeparator();
+
+        setAutoscrolls(true);
+        setMaximumSize(new java.awt.Dimension(0, 0));
+        setMinimumSize(new java.awt.Dimension(800, 500));
+        setName("ProtCadastraCliente"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(800, 500));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+
+        jLabel3.setText("Código:");
+
+        txtCodPedido.setEditable(false);
+        txtCodPedido.setFocusable(false);
+
+        jLabel2.setText("Data Inclusão:");
+
+        txtDataInclPedido.setEditable(false);
+        txtDataInclPedido.setFocusable(false);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Seleção do Produto"));
+        jPanel1.setMaximumSize(new java.awt.Dimension(750, 400));
+        jPanel1.setPreferredSize(new java.awt.Dimension(750, 300));
+
+        jLabel4.setText("Código Produto:");
+
+        txtCodProdPedido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCodProdPedidoKeyReleased(evt);
+            }
+        });
+
+        jLabel10.setText("Descrição Produto:");
+
+        btnPesqProd.setText("Pesquisar");
+        btnPesqProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesqProdActionPerformed(evt);
+            }
+        });
+
+        cmbTamProdPedido.setModel(lmTamSelecProdt);
+
+        jLabel6.setText("Tamanho:");
+
+        jLabel7.setText("Cor:");
+
+        cmbCorProdPedido.setModel(lmCoresSelecProdt);
+
+        btnNovoTamProdPedido.setText("+");
+        btnNovoTamProdPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoTamProdPedidoActionPerformed(evt);
+            }
+        });
+
+        btnNovaCorProdPedido.setText("+");
+        btnNovaCorProdPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovaCorProdPedidoActionPerformed(evt);
+            }
+        });
+
+        btnExcluirProdPedido.setText("Excluir Produto");
+        btnExcluirProdPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirProdPedidoActionPerformed(evt);
+            }
+        });
+
+        btnIncluirProdPedido.setText("Incluir Produto");
+        btnIncluirProdPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncluirProdPedidoActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Quantidade:");
+
+        gridItensPedido.setAutoCreateRowSorter(true);
+        tmItensPedido = new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Prod.", "Descrição Produto", "Situação", "Tam.", "Cor", "Qtde", "Vlr Unit", "Vlr Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        };
+        gridItensPedido.setModel(tmItensPedido);
+        gridItensPedido.setAutoscrolls(false);
+        gridItensPedido.setRowSelectionAllowed(true);
+        gridItensPedido.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        gridItensPedido.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(gridItensPedido);
+        gridItensPedido.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        gridItensPedido.getColumnModel().getColumn(0).setPreferredWidth(1);
+        gridItensPedido.getColumnModel().getColumn(1).setPreferredWidth(150);
+        gridItensPedido.getColumnModel().getColumn(2).setPreferredWidth(70);
+        gridItensPedido.getColumnModel().getColumn(3).setPreferredWidth(1);
+        gridItensPedido.getColumnModel().getColumn(4).setPreferredWidth(15);
+        gridItensPedido.getColumnModel().getColumn(5).setPreferredWidth(10);
+        gridItensPedido.getColumnModel().getColumn(6).setPreferredWidth(10);
+        gridItensPedido.getColumnModel().getColumn(7).setPreferredWidth(10);
+
+        jLabel9.setText("Valor Total do Pedido:");
+
+        txtVlrTotalPedido.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtVlrTotalPedido.setText("R$ 0,00");
+        txtVlrTotalPedido.setEnabled(false);
+        txtVlrTotalPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtVlrTotalPedidoActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Valor:");
+
+        btnLimpaProduto.setText("Limpa");
+        btnLimpaProduto.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnLimpaProduto.setMinimumSize(new java.awt.Dimension(33, 23));
+        btnLimpaProduto.setPreferredSize(new java.awt.Dimension(33, 23));
+        btnLimpaProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpaProdutoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnIncluirProdPedido)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcluirProdPedido))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(516, 516, 516)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtVlrTotalPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbTamProdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnNovoTamProdPedido)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbCorProdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnNovaCorProdPedido)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtQtdeProdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtVlrProdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCodProdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDescProdPedido)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnLimpaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnPesqProd)))))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLimpaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesqProd)
+                    .addComponent(txtDescProdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtCodProdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbTamProdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(btnNovoTamProdPedido)
+                    .addComponent(jLabel7)
+                    .addComponent(cmbCorProdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovaCorProdPedido))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtQtdeProdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel11)
+                    .addComponent(txtVlrProdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnExcluirProdPedido)
+                    .addComponent(btnIncluirProdPedido))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtVlrTotalPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addContainerGap())
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Seleção do Cliente"));
+
+        jLabel1.setText("Cliente:");
+
+        jLabel5.setText("CPF/CNPJ:");
+
+        btnPesqCliente.setText("Pesquisar");
+        btnPesqCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesqClienteActionPerformed(evt);
+            }
+        });
+
+        btnLimpaCliente.setText("Limpa");
+        btnLimpaCliente.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnLimpaCliente.setMinimumSize(new java.awt.Dimension(33, 23));
+        btnLimpaCliente.setPreferredSize(new java.awt.Dimension(33, 23));
+        btnLimpaCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpaClienteActionPerformed(evt);
+            }
+        });
+
+        txtCpfCnpjClientePedido.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNomeClientePedido, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCpfCnpjClientePedido, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimpaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPesqCliente)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnLimpaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPesqCliente)
+                        .addComponent(txtCpfCnpjClientePedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtNomeClientePedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        btnFechar.setText("Fechar");
+        btnFechar.setFocusable(false);
+        btnFechar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnFechar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
+
+        btnSalvar.setText("Salvar");
+        btnSalvar.setFocusable(false);
+        btnSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSalvar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(4, 4, 4)
+                        .addComponent(txtCodPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDataInclPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnFechar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSalvar))
+                    .addComponent(jSeparator3))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCodPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtDataInclPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnFechar)
+                    .addComponent(btnSalvar))
+                .addContainerGap())
+        );
+
+        getAccessibleContext().setAccessibleName("");
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        telaCarregada.dispose();
+
+
+    }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if (validaFormulario()) {
+            if (gridItensPedido.getSelectedRowCount() != 0 && new OADPedido().salvar(pedido)) {
+                for (int i = 0; i < itensDoPedido.size(); i++) {
+                    new OADItem().salvar(itensDoPedido.get(i));
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Registro Salvo com sucesso!", "", JOptionPane.INFORMATION_MESSAGE);
+            itensDoPedido = new ArrayList<Item>();
+            pedido = null;
+            limparCampos();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao salvar o pedido, por favor, reinicie o processo de cadastramento.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+
+
+        if (telaChamadora != null) {
+            if (telaChamadora.getClass().equals(FormConsultaPedido.class)) {
+               /* FormConsultaPedido telaConsultaPedido = (FormConsultaPedido) telaChamadora;
+                telaConsultaPedido.consultarPedido(null);*/
+                telaCarregada.dispose();
+            }
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+    }//GEN-LAST:event_formComponentShown
+
+    private void btnExcluirProdPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirProdPedidoActionPerformed
+        // TODO add your handling code here:
+
+        atualizaValorPedido(false, NumberFieldVerifier.GetValorFormatado(tmItensPedido.getValueAt(gridItensPedido.getSelectedRow(), 7).toString()));
+        itensDoPedido.remove(gridItensPedido.getSelectedRow());
+        tmItensPedido.removeRow(gridItensPedido.getSelectedRow());
+    }//GEN-LAST:event_btnExcluirProdPedidoActionPerformed
+
+    private void btnIncluirProdPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirProdPedidoActionPerformed
+        // TODO add your handling code here:
+        if (pedido == null) {
+            pedido = new Pedido();
+            pedido.setCliente(clienteSelecionado);
+            pedido.setSituacao('1');
+            pedido.setDataInclusao(new Date(System.currentTimeMillis()));
+//            new OADPedido().salvar(pedido);
+        }
+        tamanhoSelecionado = listTamSelec.get(cmbTamProdPedido.getSelectedIndex());
+        corSelecionada = listCorSelec.get(cmbCorProdPedido.getSelectedIndex());
+        Item item = new Item();
+        item.setPedido(pedido);
+        item.setProduto(produtoSelecionado);
+        item.setCor(corSelecionada);
+        item.setTamanho(tamanhoSelecionado);
+        item.setQuantidade(Integer.valueOf(txtQtdeProdPedido.getText()));
+        item.setValor(NumberFieldVerifier.GetValorFormatado(txtVlrProdPedido.getText()));
+        item.setSituacao('1');
+
+        tmItensPedido.addRow(item.getLinha());
+        itensDoPedido.add(item);
+        atualizaValorPedido(true, item.getValorTotalProd());
+
+    }//GEN-LAST:event_btnIncluirProdPedidoActionPerformed
+
+    private void txtVlrTotalPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVlrTotalPedidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtVlrTotalPedidoActionPerformed
+
+    private void btnPesqClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqClienteActionPerformed
+        clienteSelecionado = new Cliente();
+        clienteSelecionado.setNomeRazaoSocial(txtNomeClientePedido.getText());
+        JInternalFrame jf = new JInternalFrame();
+        FormConsultaCliente j1 = new FormConsultaCliente(jf, this, clienteSelecionado);
+        if (clienteSelecionado.getCodigo() == null) {
+            Principal.TELA_PRINCIPAL.abrirJanelaBuscaCliente(this, clienteSelecionado);
+        } else {
+            //jf.dispose();
+        }
+    }//GEN-LAST:event_btnPesqClienteActionPerformed
+
+    private void btnPesqProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqProdActionPerformed
+        produtoSelecionado = new Produto();
+        if (!txtCodProdPedido.getText().trim().isEmpty()) {
+            produtoSelecionado.setCodigoReferencia(Integer.valueOf(txtCodProdPedido.getText()));
+        } else {
+            produtoSelecionado.setDescricao(txtDescProdPedido.getText());
+        }
+        JInternalFrame jf = new JInternalFrame();
+        FormConsultaProduto j1 = new FormConsultaProduto(jf, this, produtoSelecionado);
+        if (produtoSelecionado.getCodigo() == null) {
+            Principal.TELA_PRINCIPAL.abrirJanelaConsultaProduto(this, produtoSelecionado);
+        } else {
+            jf.dispose();
+        }
+
+    }//GEN-LAST:event_btnPesqProdActionPerformed
+
+    private void btnLimpaProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpaProdutoActionPerformed
+        txtCodProdPedido.setText("");
+        txtCodProdPedido.setEnabled(true);
+        txtDescProdPedido.setText("");
+        txtDescProdPedido.setEnabled(true);
+        txtQtdeProdPedido.setText("");
+        txtVlrProdPedido.setText("");
+        carregaCaracteristicasDoProduto(null);
+        this.produtoSelecionado = new Produto();
+        txtCodProdPedido.requestFocus();
+    }//GEN-LAST:event_btnLimpaProdutoActionPerformed
+
+    private void btnLimpaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpaClienteActionPerformed
+        txtCpfCnpjClientePedido.setText("");
+        txtNomeClientePedido.setText("");
+        this.clienteSelecionado = new Cliente();
+        txtNomeClientePedido.requestFocus();
+        txtNomeClientePedido.setEnabled(true);
+    }//GEN-LAST:event_btnLimpaClienteActionPerformed
+
+    private void btnNovoTamProdPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoTamProdPedidoActionPerformed
+        Principal.TELA_PRINCIPAL.abrirJanelaProduto(telaCarregada, produtoSelecionado,true);
+    }//GEN-LAST:event_btnNovoTamProdPedidoActionPerformed
+
+    private void btnNovaCorProdPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaCorProdPedidoActionPerformed
+        Principal.TELA_PRINCIPAL.abrirJanelaProduto(telaCarregada, produtoSelecionado, true);
+    }//GEN-LAST:event_btnNovaCorProdPedidoActionPerformed
+
+    private void txtCodProdPedidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodProdPedidoKeyReleased
+        JTextField t = (JTextField) evt.getSource();
+        t.setText(t.getText().replaceAll("[^0-9]", ""));        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodProdPedidoKeyReleased
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    javax.swing.JButton btnExcluirProdPedido;
+    javax.swing.JButton btnFechar;
+    javax.swing.JButton btnIncluirProdPedido;
+    javax.swing.JButton btnLimpaCliente;
+    javax.swing.JButton btnLimpaProduto;
+    javax.swing.JButton btnNovaCorProdPedido;
+    javax.swing.JButton btnNovoTamProdPedido;
+    javax.swing.JButton btnPesqCliente;
+    javax.swing.JButton btnPesqProd;
+    javax.swing.JButton btnSalvar;
+    javax.swing.JComboBox cmbCorProdPedido;
+    javax.swing.JComboBox cmbTamProdPedido;
+    javax.swing.JTable gridItensPedido;
+    javax.swing.JLabel jLabel1;
+    javax.swing.JLabel jLabel10;
+    javax.swing.JLabel jLabel11;
+    javax.swing.JLabel jLabel2;
+    javax.swing.JLabel jLabel3;
+    javax.swing.JLabel jLabel4;
+    javax.swing.JLabel jLabel5;
+    javax.swing.JLabel jLabel6;
+    javax.swing.JLabel jLabel7;
+    javax.swing.JLabel jLabel8;
+    javax.swing.JLabel jLabel9;
+    javax.swing.JPanel jPanel1;
+    javax.swing.JPanel jPanel2;
+    javax.swing.JScrollPane jScrollPane1;
+    javax.swing.JSeparator jSeparator1;
+    javax.swing.JSeparator jSeparator3;
+    javax.swing.JTextField txtCodPedido;
+    javax.swing.JTextField txtCodProdPedido;
+    javax.swing.JFormattedTextField txtCpfCnpjClientePedido;
+    javax.swing.JTextField txtDataInclPedido;
+    javax.swing.JTextField txtDescProdPedido;
+    javax.swing.JTextField txtNomeClientePedido;
+    componente.text.RequiredTextField txtQtdeProdPedido;
+    componente.text.RequiredTextField txtVlrProdPedido;
+    javax.swing.JTextField txtVlrTotalPedido;
+    // End of variables declaration//GEN-END:variables
+
+    private void limparCampos() {
+        txtNomeClientePedido.setText(null);
+        txtCpfCnpjClientePedido.setText(null);
+        txtDataInclPedido.setText(null);
+        txtCodPedido.setText(null);
+        txtCodProdPedido.setText(null);
+        txtDescProdPedido.setText(null);
+        txtVlrTotalPedido.setText("R$ 0,00");
+        tmItensPedido.setNumRows(0);
+        lmTamSelecProdt.removeAllElements();
+        lmCoresSelecProdt.removeAllElements();
+        clienteSelecionado = null;
+        produtoSelecionado = null;
+        itemSelecionado = null;
+        itensDoPedido = new ArrayList<Item>();
+        initComponents();
+        txtNomeClientePedido.requestFocus();
+
+    }
+
+    private void atualizaValorPedido(boolean adicionar, double vlrProd) {
+        if (adicionar) {
+            txtVlrTotalPedido.setText(NumberFieldVerifier.SetValorFormatado(NumberFieldVerifier.GetValorFormatado(txtVlrTotalPedido.getText()) + vlrProd));
+        } else {
+            txtVlrTotalPedido.setText(NumberFieldVerifier.SetValorFormatado(NumberFieldVerifier.GetValorFormatado(txtVlrTotalPedido.getText()) - vlrProd));
+        }
+    }
+
+    public Cliente getClienteSelecionado() {
+        return clienteSelecionado;
+    }
+
+    public void setClienteSelecionado(Cliente clienteSelecionado) {
+        txtCpfCnpjClientePedido.setText(clienteSelecionado.getCpfCnpj());
+        txtNomeClientePedido.setText(clienteSelecionado.getNomeRazaoSocial());
+        txtNomeClientePedido.setEnabled(false);
+        this.clienteSelecionado = clienteSelecionado;
+        txtCodProdPedido.requestFocus();
+    }
+
+    public Produto getProdutoSelecionado() {
+        return produtoSelecionado;
+    }
+
+    public void setProdutoSelecionado(Produto produtoSelecionado) {
+        txtCodProdPedido.setText(produtoSelecionado.getCodigoReferencia().toString());
+        txtCodProdPedido.setEnabled(false);
+        txtDescProdPedido.setText(produtoSelecionado.getDescricao());
+        txtDescProdPedido.setEnabled(false);
+        txtQtdeProdPedido.setText("1");
+        txtVlrProdPedido.setText(NumberFieldVerifier.SetValorFormatado(produtoSelecionado.getValorVenda()));
+        carregaCaracteristicasDoProduto(produtoSelecionado);
+        this.produtoSelecionado = produtoSelecionado;
+
+        txtQtdeProdPedido.requestFocus();
+    }
+
+    public void carregaCaracteristicasDoProduto(Produto p) {
+        lmTamSelecProdt.removeAllElements();
+        lmCoresSelecProdt.removeAllElements();
+
+        if (p != null) {
+            listTamSelec = p.getCaracteristicas(1);
+            //      lmTamSelecProdt.addElement("Selecione...");
+            for (int i = 0; i < listTamSelec.size(); i++) {
+                lmTamSelecProdt.addElement(listTamSelec.get(i).getNome());
+            }
+
+            listCorSelec = p.getCaracteristicas(2);
+            //      lmCoresSelecProdt.addElement("Selecione...");
+            for (int i = 0; i < listCorSelec.size(); i++) {
+                lmCoresSelecProdt.addElement(listCorSelec.get(i).getNome());
+            }
+        }
+    }
+
+    public Caracteristica getTamanhoSelecionado() {
+        return tamanhoSelecionado;
+    }
+
+    public void setTamanhoSelecionado(Caracteristica tamanhoSelecionado) {
+        this.tamanhoSelecionado = tamanhoSelecionado;
+    }
+
+    public Caracteristica getCorSelecionada() {
+        return corSelecionada;
+    }
+
+    public void setCorSelecionada(Caracteristica corSelecionada) {
+        this.corSelecionada = corSelecionada;
+    }
+
+    private Boolean validaFormulario() {
+        Boolean retorno = true;
+
+        if (!this.txtQtdeProdPedido.runValidation()) {
+            retorno = false;
+        }
+        if (!this.txtVlrProdPedido.runValidation()) {
+            retorno = false;
+        }
+        if (!((RequiredComboBox)this.cmbTamProdPedido).runValidation()) {
+            retorno = false;
+        }
+        if (!((RequiredComboBox) this.cmbCorProdPedido).runValidation()) {
+            retorno = false;
+        }
+        return retorno;
+    }
+}

@@ -1,0 +1,35 @@
+Requisitos Importantes:
+    - Somente é possível Emitir Ordem de Produção completa de um produto.
+
+Entrega v0.1 (testes)
+    - Incluso:
+        - Cadastros:
+            - Clientes;
+            - Produtos;
+            - Pedidos;
+        - Emissão de Ordem de produção;
+        - Impressão da Ordem de produção;
+        - Baixa automática de produtos dos pedidos;
+    
+    - Pendente:
+        OK - Consulta de Ordens de Produção Emitidas;
+        OK - Cancelamento de Ordens de Produção Emitidas;
+        OK (rosaine) - Inserido ícones
+        OK - Remover Cadastro de Cidades, etc...;
+        OK (rosaine) - Incluir formatação de CPF/CNPJ e telefones;
+        EM ANDAMENTO (rosaine)- Cadastro de Caracteristicas;
+        EM ANDAMENTO (WINE) - Deleção lógica Geral;
+            OK - EXCLUSÃO CLIENTE + VALIDAÇÃO EXCLUSÃO
+            OK - EXCLUSÃO PRODUTO + VALIDAÇÃO EXCLUSÃO
+            EM ANDAMENTO - EXCLUSÃO PEDIDO + VALIDAÇÃO EXCLUSÃO
+       (Wine) Grid de Cadastro de pedido;
+       (ROSAINE) Fazer verificação de Valições; 
+            OK - (WINE PASSAR obrigatórios)
+       OK (Rosaine) - Incluir Atalhos na tela Principal (MENU BAR);
+       (Rosaine) - Incluir teclas de atalho nas principais funcionalidades:
+            - Cadastro de Produto;
+            - Cadastro de Cliente;
+            - Cadastro de Pedido;
+            - Emissão de Ordens de Produção;
+        (JHONNITA) Melhorar Cascateamento de Telas; 
+        - Reimpressão de Ordem de Produção;
